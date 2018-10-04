@@ -21,11 +21,16 @@ pipeline {
             steps {
                 script {
 			        docker.withRegistry('http://localhost:3000') {
-			        	app.push("${BUILD_NUMBER}")
 			            app.push("latest")
 			        }
                 }
             }
         }        
     }
+    post{
+      always {
+         sh "docker rmi $(docker images -qa -f 'dangling=true') || exit 0"
+         sh "docker system prune -f"
+      }   
+   }    
 }
