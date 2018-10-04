@@ -29,7 +29,7 @@ pipeline {
     }
     post{
       always {
-         sh "docker rmi $(docker images -qa -f 'dangling=true') || exit 0"
+         sh "docker rmi \$(docker images -qa -f 'dangling=true') || exit 0"
          sh "docker system prune -f"
       }   
    }    
