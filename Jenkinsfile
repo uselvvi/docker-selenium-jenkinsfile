@@ -13,14 +13,14 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                	app = docker.build("vinsdocker/containertest")
+                	app = docker.build("localhost:3000/vinsdocker/containertest")
                 }
             }
         }
         stage('Push Image') {
             steps {
                 script {
-			        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+			        docker.withRegistry('http://localhost') {
 			        	app.push("${BUILD_NUMBER}")
 			            app.push("latest")
 			        }
